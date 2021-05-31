@@ -1,0 +1,330 @@
+function debounce(t, e) {
+    var n;
+    return function() {
+        var i = this,
+            a = arguments;
+        clearTimeout(n), n = setTimeout((function() {
+            t.apply(i, a)
+        }), e)
+    }
+}
+
+function throttle(t, e) {
+    var n, i;
+    return function() {
+        var a = this,
+            o = arguments;
+        i ? (clearTimeout(n), n = setTimeout((function() {
+            Date.now() - i >= e && (t.apply(a, o), i = Date.now())
+        }), e - (Date.now() - i))) : (t.apply(a, o), i = Date.now())
+    }
+}
+window.addEventListener("load", (function() {
+        var t = getOS(),
+            e = document.querySelector(".footer__useful-info"),
+            n = t.isAndroid ? "footer__useful-info__download__is-android" : t.isIOS ? "footer__useful-info__download__is-ios" : "footer__useful-info__download__is-others";
+        e && e.classList.add(n)
+    })),
+    function() {
+        var t, e, n = document.querySelector(".js-main-nav-wrapper"),
+            i = (document.querySelector(".js-main-nav"), document.querySelector(".js-main-nav-logo"), document.querySelector(".js-main-nav-container")),
+            a = document.querySelectorAll(".js-subnav"),
+            o = document.querySelectorAll(".js-subnav-link"),
+            s = document.querySelectorAll(".js-quicklink"),
+            r = document.querySelectorAll(".js-marketing"),
+            l = document.querySelector(".js-pub-nav-list") && document.querySelector(".js-pub-nav-list").querySelectorAll("li.pub-nav__list-item"),
+            c = !1;
+
+        function d(t) {
+            t.classList.add("is-active"), document.body.classList.add("is-dimmed"), t.style.maxHeight = t.parentNode.querySelector(".band__container").offsetHeight + "px"
+        }
+
+        function u() {
+            c || (t && t.classList.remove("is-active"), t && t.removeAttribute("style"), e && e.classList.remove("is-active"), document.body.classList.remove("is-dimmed"))
+        }
+
+        function f(n) {
+            if (k()) {
+                c = !1, u();
+                var i = n.currentTarget;
+                (e = i).classList.add("is-active"), (t = e.parentNode.querySelector(".js-subnav")) && d(t)
+            }
+        }
+
+        function h(t) {
+            c = !1, u()
+        }
+
+        function p(t) {
+            c = !0
+        }
+
+        function m(t) {
+            c = !1, u()
+        }
+
+        function v(n) {
+            var i, a, o = n.currentTarget;
+            document.querySelectorAll(".main-nav__link.has-children").forEach((function(t) {
+                t.parentNode.contains(o) && (i = t.parentNode.querySelector(".main-nav__link"), a = t.parentNode.querySelector(".js-subnav"))
+            })), e = i, i.classList.add("is-active"), t = e.parentNode.querySelector(".js-subnav"), d(a)
+        }
+
+        function g(t) {
+            c = !1, u()
+        }
+
+        function E(t) {
+            return parseFloat(window.getComputedStyle(t).transitionDuration.slice(0, -1)) || .5
+        }
+        var _ = document.querySelector(".js-hamburger");
+        _ && _.addEventListener("click", throttle((function(t) {
+            _.classList.contains("is-active") ? D() : function() {
+                document.body.classList.add("hamburger-active"), document.body.parentNode.classList.add("hamburger-active"), _.classList.add("is-active"), i.style.height = document.body.offsetHeight - N() - $() + "px", i.style.top = N() + "px", i.style.display = "block", setTimeout((function() {
+                    i.classList.add("is-active")
+                }), 0);
+                E(i)
+            }()
+        }), 1e3));
+        var S = [],
+            C = document.querySelector(".js-login-join-nav") && document.querySelector(".js-login-join-nav").querySelectorAll("li"),
+            T = document.querySelector(".js-search-mobile-toggle"),
+            A = document.querySelector(".js-mobile-search");
+
+        function b(t) {
+            i.classList.remove("is-subnav-active"), i.classList.remove("is-search-active");
+            var e = E(document.querySelector(".main-nav__container__lists"));
+            setTimeout((function() {
+                A.classList.remove("is-active")
+            }), 1e3 * e)
+        }
+
+        function y(e) {
+            i.classList.remove("is-subnav-active");
+            var n = E(document.querySelector(".main-nav__container__lists"));
+            setTimeout((function() {
+                t.classList.remove("is-active")
+            }), 1e3 * n)
+        }
+
+        function I(e) {
+            var n = e.currentTarget;
+            !k() && n.classList.contains("has-children") && e.preventDefault(), (t = n.parentNode.querySelector(".js-subnav")).style.top = i.scrollTop + "px", t.classList.add("is-active"), n.classList.contains("has-children") && (i.classList.add("is-subnav-active"), t.style.maxHeight = document.body.offsetHeight - N() - $() + "px")
+        }
+
+        function N() {
+            return n.offsetHeight
+        }
+
+        function $() {
+            return n.offsetTop
+        }
+
+        function D(e) {
+            if (i) {
+                document.body.classList.remove("hamburger-active"), document.body.parentNode.classList.remove("hamburger-active"), _ && _.classList.remove("is-active"), i.classList.remove("is-active");
+                var n = E(i);
+                setTimeout((function() {
+                    i.style.display = "none", i.classList.remove("is-subnav-active"), t && t.classList.remove("is-active"), S.forEach((function(t) {
+                        t.classList.remove("is-active")
+                    })), k() && i.removeAttribute("style")
+                }), e ? 0 : 1e3 * n)
+            }
+        }
+        T && T.addEventListener("click", (function(t) {
+            t.preventDefault(), A.classList.add("is-active"), A.style.top = i.scrollTop + "px", i.classList.add("is-subnav-active"), i.classList.add("is-search-active")
+        }));
+        var L, O = !1;
+
+        function w(t) {
+            if (!k() < 1024 && t.currentTarget.classList.contains("has-children") && t.preventDefault(), !L) {
+                L = !0;
+                var e = t.currentTarget,
+                    n = e.parentNode.querySelector(".subnav__links__level-3-nav__list");
+                if (e.classList.contains("is-active")) {
+                    e.classList.remove("is-active"), n.style.maxHeight = "0px";
+                    var i = E(n);
+                    setTimeout((function() {
+                        n.removeAttribute("style"), L = !1
+                    }), 1e3 * i)
+                } else {
+                    e.classList.add("is-active"), S.push(e), n.style.display = "block", n.style.maxHeight = "none";
+                    var a = n.offsetHeight;
+                    n.style.maxHeight = "0px", setTimeout((function() {
+                        n.style.maxHeight = a + "px"
+                    }), 10), setTimeout((function() {
+                        L = !1
+                    }), 1e3 * E(n) + 10 || 510)
+                }
+            }
+        }
+
+        function R() {
+            k() && O ? (O = !1, D(!0), l && l.forEach((function(t) {
+                t.querySelector("a").addEventListener("mouseover", f), t.querySelector("a").addEventListener("focus", f), t.querySelector("a").addEventListener("focusout", h), t.addEventListener("mouseleave", h)
+            })), o && o.forEach((function(t) {
+                t.addEventListener("focusin", v), t.addEventListener("focusout", g)
+            })), s && s.forEach((function(t) {
+                t.addEventListener("focusin", v), t.addEventListener("focusout", g)
+            })), r && r.forEach((function(t) {
+                t.querySelectorAll("a").forEach((function(t) {
+                    t.addEventListener("focusin", v)
+                })), t.querySelectorAll("a").forEach((function(t) {
+                    t.addEventListener("focusout", g)
+                }))
+            })), a && a.forEach((function(t) {
+                t.addEventListener("mouseover", p), t.addEventListener("mouseleave", m)
+            })), function() {
+                document.querySelectorAll(".js-subnav-back").forEach((function(t) {
+                    t.removeEventListener("click", y)
+                }));
+                var t = document.querySelector(".js-search-back");
+                t && t.removeEventListener("click", b), l && l.forEach((function(t) {
+                    t.querySelector("a:not(.js-subnav-back)").removeEventListener("click", I)
+                })), o && o.forEach((function(t) {
+                    t.removeEventListener("click", w)
+                })), C && C.forEach((function(t) {
+                    var e = t.querySelector("a:not(.js-subnav-back)");
+                    e && e.removeEventListener("click", I)
+                }))
+            }()) : k() || O ? k() || i && (i.style.top = N() + "px") : (O = !0, l && l.forEach((function(t) {
+                t.querySelector("a").removeEventListener("mouseover", f), t.querySelector("a").removeEventListener("focus", f), t.querySelector("a").removeEventListener("focusout", h), t.removeEventListener("mouseleave", h)
+            })), o && o.forEach((function(t) {
+                t.removeEventListener("focusin", v), t.removeEventListener("focusout", g)
+            })), s && s.forEach((function(t) {
+                t.removeEventListener("focusin", v), t.removeEventListener("focusout", g)
+            })), r && r.forEach((function(t) {
+                t.querySelectorAll("a").forEach((function(t) {
+                    t.removeEventListener("focusin", v)
+                })), t.querySelectorAll("a").forEach((function(t) {
+                    t.removeEventListener("focusout", g)
+                }))
+            })), a && a.forEach((function(t) {
+                t.removeEventListener("mouseover", p), t.removeEventListener("mouseleave", m)
+            })), function() {
+                document.querySelectorAll(".js-subnav-back").forEach((function(t) {
+                    t.addEventListener("click", y)
+                }));
+                var t = document.querySelector(".js-search-back");
+                t && t.addEventListener("click", b), l && l.forEach((function(t) {
+                    t.querySelector("a:not(.js-subnav-back)").addEventListener("click", I)
+                })), o && o.forEach((function(t) {
+                    t.addEventListener("click", w)
+                })), C && C.forEach((function(t) {
+                    var e = t.querySelector("a:not(.js-subnav-back)");
+                    e && e.addEventListener("click", I)
+                }))
+            }())
+        }
+
+        function k() {
+            return window.matchMedia("(min-width: 1024px)").matches
+        }
+        document.addEventListener("DOMContentLoaded", (function() {
+            k() ? O = !0 : k() || (O = !1), R()
+        })), window.addEventListener("resize", debounce(R, 100))
+    }(),
+    function() {
+        var t = document.querySelectorAll(".js-btn-dropdown"),
+            e = document.querySelectorAll(".js-dropdown"),
+            n = document.querySelectorAll(".js-dropdown-list"),
+            i = !1;
+
+        function a(t) {
+            var n, i = t.currentTarget;
+            e.forEach((function(t) {
+                t.contains(i) && (n = t)
+            })), u(n.parentNode.querySelector(".js-btn-dropdown"))
+        }
+
+        function o(t) {
+            var n, i = t.currentTarget;
+            e.forEach((function(t) {
+                t.contains(i) && (n = t)
+            })), f(n.parentNode.querySelector(".js-btn-dropdown"))
+        }
+
+        function s(t) {
+            u(t.currentTarget)
+        }
+
+        function r(t) {
+            var e = t.currentTarget;
+            setTimeout((function() {
+                f(e)
+            }), 0)
+        }
+
+        function l(t) {
+            var e = t.currentTarget;
+            "true" === e.dataset.clicked ? (e.dataset.clicked = "", f(e)) : (e.dataset.clicked = !0, u(e))
+        }
+
+        function c(t) {
+            i = !0
+        }
+
+        function d(t) {
+            i = !1, f(t.currentTarget.parentNode.querySelector(".js-btn-dropdown"))
+        }
+
+        function u(t) {
+            t.classList.add("is-active"), t.parentNode.querySelector(".js-dropdown").classList.add("is-active")
+        }
+
+        function f(t) {
+            i || "true" === t.dataset.clicked || (t.classList.remove("is-active"), t.parentNode.querySelector(".js-dropdown").classList.remove("is-active"))
+        }
+        t && t.forEach((function(t) {
+            t.addEventListener("mouseover", s), t.addEventListener("click", l), t.addEventListener("focus", s), t.addEventListener("mouseleave", r)
+        })), e && e.forEach((function(t) {
+            t.addEventListener("mouseover", c), t.addEventListener("mouseleave", d)
+        })), n && n.forEach((function(t) {
+            t.querySelectorAll("a").forEach((function(t) {
+                t.addEventListener("focusin", a), t.addEventListener("focusout", o)
+            }))
+        }))
+    }(),
+    function() {
+        var t = window.pageYOffset,
+            e = document.querySelector(".js-aws-header");
+        window.addEventListener("scroll", throttle((function() {
+            var n = window.pageYOffset || document.documentElement.scrollTop;
+            n > t && window.pageYOffset > e.clientHeight ? (i = e.clientHeight, e.style.transform = "translateY(" + (-i - 10) + "px)") : function() {
+                var t = e.clientHeight;
+                e.style.transform = "translateY(0px)", document.body.style.paddingTop = t + "px"
+            }();
+            var i;
+            t = n <= 0 ? 0 : n
+        }), 100), !1), document.addEventListener("DOMContentLoaded", (function() {
+            var t = e.clientHeight;
+            document.body.style.paddingTop = t + "px"
+        }))
+    }(),
+    function() {
+        document.querySelector(".js-main-nav");
+        var t = document.querySelector(".js-main-nav-wrapper"),
+            e = document.querySelector(".js-search-toggle"),
+            n = document.querySelector(".js-toplink-search-list-item"),
+            i = document.querySelector(".js-search"),
+            a = document.querySelector(".js-search-close-btn"),
+            o = document.querySelector(".js-search-input");
+
+        function s() {
+            n.classList.remove("is-search-active"), document.body.classList.remove("is-dimmed"), document.body.classList.remove("is-search-active"), i && i.classList.remove("is-active")
+        }
+
+        function r() {
+            o.value = ""
+        }
+        e.addEventListener("click", (function(t) {
+            t.preventDefault(), r(), n.classList.add("is-search-active"), document.body.classList.add("is-dimmed"), document.body.classList.add("is-search-active"), setTimeout((function() {
+                i && i.classList.add("is-active")
+            }), 0)
+        })), a.addEventListener("click", s), o.addEventListener("keyup", (function(t) {
+            27 === t.keyCode && t.target.value.length > 0 ? r() : 27 === t.keyCode && 0 === t.target.value.length && s()
+        })), document.addEventListener("DOMContentLoaded", (function() {
+            i.parentNode.removeChild(i), t.insertAdjacentElement("beforeend", i)
+        }))
+    }
+();
