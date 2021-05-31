@@ -6881,9 +6881,9 @@ function externalCTAClick(event) {
 var btns=document.querySelectorAll('span.button-container');
 btns = Array.prototype.slice.apply(btns);
 
-btns.forEach(btn=>{
-                btn.onclick=externalCTAClick;
-});
+for (var i = 0; i < btns.legth; i++) {
+  btns[i].onclick = externalCTAClick;
+}
 
 </script>
 
