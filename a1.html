@@ -6734,7 +6734,7 @@ $(document).ready(function() {
       var scrollWidth = $(".table-card-active").width() || 250;
 
       $('.table-content').css("scroll-snap-type", "none");
-      $('.table-content').animate({scrollLeft: "-=" + scrollWidth}, 500, () => $('.table-content').css("scroll-snap-type", "x mandatory"));
+      $('.table-content').animate({scrollLeft: "-=" + scrollWidth}, 500, function(){$('.table-content').css("scroll-snap-type", "x mandatory")});
     })
 
     $(document).on("click", ".table-scroll-next", function(){
